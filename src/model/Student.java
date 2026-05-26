@@ -1,9 +1,6 @@
 package model;
 
-import exceptions.InvalidCourseException;
 import exceptions.InvalidDniException;
-import exceptions.InvalidGroupException;
-
 import java.util.HashMap;
 
 /**
@@ -13,19 +10,22 @@ import java.util.HashMap;
  */
 public class Student extends Person implements Comparable<Student>{
 
-    /** Student's Course (from 1º to 6º)*/
-    private int course;
-
-    /** Student's Group (A, B or C)*/
-    private char group;
+    /** Student's Course */
+    private Course course;
 
     /** Student's Grades ("Subject": "mark") */
     private HashMap<Subject, Double> grades;
 
-    public Student(String dni, String name, String lastName, int course, char group) throws InvalidDniException {
+    /**
+     * Constructor for Student Class
+     * @param dni Student's ID number
+     * @param name Student's name
+     * @param lastName Student's last name
+     * @throws InvalidDniException If the DNI is null, does not have 9 characters,
+     *      or does not follow the format (8 digits + 1 letter)
+     */
+    public Student(String dni, String name, String lastName) throws InvalidDniException {
         super(dni, name, lastName);
-        setCourse(course);
-        setGroup(group);
         this.grades = new HashMap<>();
         generateEmail();
     }
@@ -34,49 +34,13 @@ public class Student extends Person implements Comparable<Student>{
      * Returns the course
      * @return The course of the student
      */
-    public int getCourse() { return this.course; }
-
-    /**
-     * Returns the group
-     * @return The group of the student
-     */
-    public char getGroup() { return this.group; }
+    public Course getCourse() { return this.course; }
 
     /**
      * Returns the grades
      * @return The grades of the student
      */
     public HashMap<Subject, Double> getGrades() { return this.grades; }
-
-    /**
-     * Sets the course after validating the value
-     * @param course The course int to set (must be between 1 and 6)
-     * @throws InvalidCourseException if the course isn't between 1 and 6
-     */
-    public void setCourse(int course) throws InvalidCourseException {
-        if (course > 6 || course < 1){
-            throw new InvalidCourseException();
-        }
-
-        this.course = course;
-    }
-
-    /**
-     * Sets the group after validating the value
-     * @param group The group char to set (Must be A, B or C)
-     * @throws InvalidGroupException if the group isn't A, B or C
-     */
-    public void setGroup(char group) throws InvalidGroupException {
-        char[] groups = {'A', 'B', 'C'};
-        for (char letter : groups){
-            if (Character.toUpperCase(group) == letter){
-                this.group = letter;
-                return;
-            }
-        }
-
-        throw new InvalidGroupException();
-    }
 
     /**
      * Adds a grade for a specific subject.
@@ -167,7 +131,7 @@ public class Student extends Person implements Comparable<Student>{
      */
     @Override
     public String toString(){
-        return super.toString() + "\nCourse: " + course + "º" + group + "\n" + grades;
+        return super.toString() + "\nCourse: " + course + "\n" + grades;
     }
 
     /**
