@@ -1,6 +1,8 @@
 package model;
 
 import exceptions.InvalidDniException;
+import interfaces.Exportable;
+
 import java.util.HashMap;
 
 /**
@@ -8,7 +10,7 @@ import java.util.HashMap;
  * @author Nicolás Mingorance Sánchez
  * @version 1.0
  */
-public class Student extends Person implements Comparable<Student>{
+public class Student extends Person implements Comparable<Student>, Exportable {
 
     /** Student's Course */
     private Course course;
@@ -35,6 +37,14 @@ public class Student extends Person implements Comparable<Student>{
      * @return The course of the student
      */
     public Course getCourse() { return this.course; }
+
+    /**
+     * Sets the course
+     * @param course we are setting
+     */
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
     /**
      * Returns the grades
@@ -143,5 +153,14 @@ public class Student extends Person implements Comparable<Student>{
     @Override
     public int compareTo(Student other) {
         return this.dni.compareTo(other.getDni());
+    }
+
+    /**
+     * Converts the student object into a formatted CSV line.
+     * @return A semicolon-separated String with the student's data
+     */
+    @Override
+    public String toCSV() {
+        return "STUDENT;" + getDni() + ";" + getName() + ";" + getLastName();
     }
 }

@@ -46,6 +46,18 @@ public class Staff extends Person{
     }
 
     /**
+     * Returns the Department
+     * @return The Department of the Staff
+     */
+    public String getDepartment(){ return this.department; }
+
+    /**
+     * Returns the Salary
+     * @return The Salary of the Staff
+     */
+    public double getSalary(){ return this.salary; }
+
+    /**
      * Sets the salary after validating the value
      * @param salary The salary double to set (must be between MIN_SALARY and MAX_SALARY)
      * @throws InvalidSalaryException if the salary isn´t between MIN_SALARY and MAX_SALARY
@@ -97,6 +109,5 @@ public class Staff extends Person{
      */
     @Override
     public String toString(){
-        return super.toString() + "\nDepartment: " + department + " | Subject Taught: " + subjectTaught + "Salary: " + salary;
+        return super.toString() + "\nDepartment: " + department + " | Subject Taught: " + subjectTaught.getName() + " | Salary: " + salary;    }
     }
-}
